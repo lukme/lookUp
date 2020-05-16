@@ -1,0 +1,87 @@
+.main {
+    padding: $wrapperPadding;
+    margin: $spacingM 0 200px 0;
+    position: relative;
+
+    &__banner {
+        background-color: $lightGray;
+        height: 70vh;
+        width: 100%;
+        position: relative;
+    }
+
+    &__image {
+        position: absolute;
+        left: 0;
+        height: 100%;
+        width: 70%;
+        background-image: url('/airplane_wing.jpg');
+        background-position: center;
+        background-clip: content-box;
+        background-size: cover;
+        border-radius: 0 150px 0 0;
+    }
+
+    &__textbox {
+        max-width: 60%;
+        background-color: rgba($white, .95);
+        padding: 40px 10% 40px 5%;
+        position: absolute;
+        right: 0;
+        top: 15%;
+        font-size: $fontSizeXL;
+        box-sizing: border-box;
+        text-align: left;
+        font-family: $fontFamilyMain;
+        font-weight: 300;
+        color: $lightBlue;
+
+        p {
+            margin: 0;
+        }
+
+        &::before {
+            content: '';
+            height: 100%;
+            width: 12px;
+            background-color: $darkBlue;
+            position: absolute;
+            left: -12px;
+            top: 0;
+        }
+
+        &::after {
+            content: '';
+            height: 100%;
+            width: 50px;
+            background-color: $lightBlue;
+            position: absolute;
+            right: 0px;
+            top: 0;
+        }
+    }
+
+    &__selectContainer {
+        width: 700px;
+        background-color: $white;
+        padding: $spacingM 20px;
+        border-radius: $mainRadius;
+        box-shadow: $mainShadow;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        position: absolute;
+        bottom: -120px;
+        left: calc(50% - 25vw);
+    }
+
+    &__select {
+        border-radius: 5px;
+        box-shadow: $mainShadow;
+        border: none;
+        width: 180px;
+        height: 40px;
+        background-color: $white;
+        margin: $spacingS $spacingS;
+    }
+}

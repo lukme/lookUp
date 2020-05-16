@@ -1,0 +1,14 @@
+.select {
+    &__button {
+        border-radius: 10px;
+        width: 120px;
+        height: 50px;
+        box-shadow: $mainShadow;
+        display: flex;
+        align-items: center;
+    }
+
+    &__icon {
+        margin: 0 $spacingS;
+    }
+}
