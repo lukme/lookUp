@@ -1,0 +1,58 @@
+.header {
+    padding: $wrapperPadding;
+    height: $headerHeight;
+    box-shadow: $mainShadow;
+    display: flex;
+    justify-content: space-between;
+
+    &__loginBtn {
+        display: inline-block;
+        background-color: $darkBlue;
+        color: $white;
+        height: 100%;
+        padding: 0 $spacingM;
+        font-family: $fontFamilyMain;
+        font-size: $fontSizeM;
+        border-radius: $mainRadius;
+        transition: all 200ms ease-in-out;
+        position: relative;
+        outline: none;
+
+        &:hover {
+            transform: scale(1.02);
+        }
+    }
+
+    &__icon {
+        position: absolute;
+        bottom: 20px;
+        right: 100%;
+        transition: all 500ms ease-in-out;
+
+        &--center {
+            animation: airplaneIncomming 200ms ease-in-out forwards;
+        }
+
+        &--right {
+            animation: airplaneEscaping 200ms ease-in-out forwards;
+        }
+    }
+}
+
+@keyframes airplaneIncomming {
+    0% {
+        right: 100%
+    }
+    100% {
+        right: calc(50% - 10px)
+    }
+}
+
+@keyframes airplaneEscaping {
+    0% {
+        right: calc(50% - 10px)
+    }
+    100% {
+        right: -20px;
+    }
+}
