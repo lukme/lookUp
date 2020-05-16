@@ -65,6 +65,7 @@
         width: 700px;
         background-color: $white;
         padding: $spacingM 20px;
+        box-sizing: border-box;
         border-radius: $mainRadius;
         box-shadow: $mainShadow;
         display: flex;
@@ -72,16 +73,14 @@
         flex-wrap: wrap;
         position: absolute;
         bottom: -120px;
-        left: calc(50% - 25vw);
+        left: calc(50% - 350px);
     }
+}
 
-    &__select {
-        border-radius: 5px;
-        box-shadow: $mainShadow;
-        border: none;
-        width: 180px;
-        height: 40px;
-        background-color: $white;
-        margin: $spacingS $spacingS;
+@media only screen and (max-width: 1280px) {
+    .main {
+        &__banner {
+            height: 90vh;
+        }
     }
 }

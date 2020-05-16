@@ -14,6 +14,10 @@ const MainPage = () => {
             </div>
             <div className="main__selectContainer">
                 <CustomSelect source='ORIGIN' />
+                <CustomSelect source='DEPARTURE' />
+                <CustomSelect source='DESTINATION' />
+                <CustomSelect source='PASSENGERS' />
+                <CustomSelect source='LUGGAGE' />
             </div>
         </div>
     )
