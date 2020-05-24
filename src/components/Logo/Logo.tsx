@@ -1,7 +1,7 @@
 import React from 'react';
 import { IoMdAirplane } from 'react-icons/io';
 
-const Logo = () => {
+const Logo: React.FunctionComponent = () => {
     return (
         <div className='logo'>
             <IoMdAirplane

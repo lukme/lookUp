@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Logo from '../Logo/Logo';
 import { GiAirplane } from 'react-icons/gi';
 
-const Header = () => {
+const Header: React.FunctionComponent = () => {
     const [airplaneClassName, setAirplaneClassName] = useState<string>('header__icon');
 
     const handleAirplaneClass = (state: string) => {

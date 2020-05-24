@@ -1,23 +1,41 @@
 .select {
     position: relative;
 
+    &--spacing {
+        margin: $spacingS;
+    }
+
     &__button {
-        border-radius: 10px;
+        border-radius: $smallRadius;
         width: 180px;
         height: 50px;
         box-shadow: $mainShadow;
         display: flex;
         align-items: center;
-        padding: 0 $spacingS;
+        padding: 0 15px;
         box-sizing: border-box;
         cursor: pointer;
-        margin: $spacingS;
+        border: none;
+        font-family: $fontFamilyMain;
+        font-size: 1rem;
+    }
+
+    &__date {
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        padding-left: 45px;
+        outline: none;
+
+        &::-webkit-calendar-picker-indicator {
+            position: absolute;
+            left: -10px;
+          }
     }
 
     &__icon {
         margin: 0 $spacingS 0 0;
     }
-
 }
 
 .submenu {
@@ -27,13 +45,78 @@
     width: 180px;
     background-color: $white;
     padding: $spacingS 0 $spacingR $spacingR;
-    margin-left: $spacingS;
     box-sizing: border-box;
     box-shadow: $mainShadow;
     border-radius: 10px;
     color: $midGray;
+    margin-bottom: 5px;
+
+    &--passengers {
+        padding: $spacingS $spacingR $spacingR $spacingR;
+        box-sizing: content-box;
+    }
 
     &__header {
         display: inline-block;
+    }
+
+    &__info {
+        display: inline-block;
+        color: $darkGray;
+        font-weight: 500;
+        margin: 5px 0;
+    }
+
+    &__subtext {
+        color: $midGray;
+        font-size: $fontSizeS;
+        margin: 8px 0;
+    }
+
+    &__info-container {
+        margin-top: 10px;
+    }
+}
+
+.passenger {
+    margin: $spacingS 0;
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+        margin: 3px 0;
+        color: $darkGray;
+    }
+
+    &__subtitle {
+        margin: 3px 0;
+        font-size: $fontSizeS;
+    }
+
+    select {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+.list-item {
+    margin: $spacingS 0 $spacingS calc(#{$spacingS} + 15px);
+    position: relative;
+    cursor: pointer;
+    color: $darkGray;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: -15px;
+        top: 50%;
+        width: 5px;
+        height: 1px;
+        background-color: $midGray;
     }
 }
