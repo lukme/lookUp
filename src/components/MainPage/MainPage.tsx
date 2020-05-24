@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { CustomSelect, SingleData } from '../CustomSelect/CustomSelect';
 
-interface FlightData {
-    origin: string | Passengers | undefined,
-    departure: string | Passengers | undefined,
-    destination: string | Passengers | undefined,
-    passengers: string | Passengers | undefined,
-    luggage: string | Passengers | undefined,
+export interface FlightData {
+    origin: string,
+    departure: string,
+    destination: string,
+    passengers: Passengers,
+    luggage: string,
 }
 
 export interface Passengers {
@@ -15,13 +15,16 @@ export interface Passengers {
     babies: string,
 }
 
-export const MainPage: React.FunctionComponent = () => {
-    const [flightData, setFlightData] = useState<FlightData>(),
-        [origin, setOrigin] = useState<string | Passengers>(),
-        [departure, setDeparture] = useState<string | Passengers>(),
-        [destination, setDestination] = useState<string | Passengers>(),
-        [passengers, setPassengers] = useState<string | Passengers>(), // TODO: change type
-        [luggage, setLuggage] = useState<string | Passengers>();
+interface Props {
+    passDataBackwards: (arg0: FlightData) => void,
+}
+
+export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
+    const [origin, setOrigin] = useState<string>(),
+        [departure, setDeparture] = useState<string>(),
+        [destination, setDestination] = useState<string>(),
+        [passengers, setPassengers] = useState<Passengers>(), // TODO: change type
+        [luggage, setLuggage] = useState<string>();
 
     const convertFlightData = (singleData: SingleData) => {
         switch (singleData.convertedSource) {
@@ -54,8 +57,7 @@ export const MainPage: React.FunctionComponent = () => {
                 passengers,
                 luggage,
             };
-            setFlightData(localFlightData)
-            console.log(localFlightData)
+            props.passDataBackwards(localFlightData);
         } else {
             alert('You have to choose all flight options');
         }

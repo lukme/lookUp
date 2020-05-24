@@ -13,7 +13,8 @@ interface Props {
 
 export interface SingleData {
     convertedSource: string,
-    dataSelected: string | Passengers,
+    dataSelected: any,
+    // dataSelected: string | Passengers ,
 }
 
 export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
@@ -48,7 +49,7 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
 
     useEffect(() => {
         !icon && renderIcon();
-        formatDate();
+        formatMaxDate();
     })
 
     const renderSubmenu = () => {
@@ -83,11 +84,16 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
         return !dataSelected ? convertedSource : dataSelected
     }
 
-    const formatDate = () => {
+    const formatMaxDate = () => {
         const today = new Date().toISOString().split("T")[0],
             yearFromNow = parseInt(today.substring(0,4)) + 1,
             maxDate = (`${yearFromNow}-${today.substring(5)}`);
         return maxDate;
+    }
+
+    const convertToday = () => {
+        const today = new Date().toISOString().split("T")[0];
+        return today;
     }
 
     return (
@@ -99,7 +105,8 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
                         name="departure"
                         id="departure"
                         className='select__button select__date'
-                        max={formatDate()}
+                        max={formatMaxDate()}
+                        min={convertToday()}
                         onChange={(event) => closeSubmenu(event.target.value)}
                     />
                 </div>
