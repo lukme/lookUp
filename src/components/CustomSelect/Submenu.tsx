@@ -3,7 +3,7 @@ import ListItem from './ListItem';
 import { AiFillInfoCircle } from 'react-icons/ai';
 import { IoIosClose } from 'react-icons/io';
 import { Passengers } from '../MainPage/MainPage';
-import useOutsideHandler from '../ClickOutsideHandler/ClickOutsideHandler';
+import useOutsideHandler from '../useOutsideHandler/useOutsideHandler';
 
 interface Props {
     handleClick: (arg0: string | Passengers) => void;
