@@ -26,10 +26,12 @@
         position: relative;
         padding-left: 45px;
         outline: none;
+        cursor: text;
 
         &::-webkit-calendar-picker-indicator {
             position: absolute;
             left: -10px;
+            cursor: pointer;
           }
     }
 
@@ -44,8 +46,7 @@
     left: 0;
     width: 180px;
     background-color: $white;
-    padding: $spacingS 0 $spacingR $spacingR;
-    box-sizing: border-box;
+    padding: $spacingS $spacingR $spacingR $spacingR;
     box-shadow: $mainShadow;
     border-radius: 10px;
     color: $midGray;
@@ -75,6 +76,16 @@
 
     &__info-container {
         margin-top: 10px;
+    }
+
+    &__header-container {
+        position: relative;
+    }
+
+    &__close {
+        position: absolute;
+        right: 0;
+        cursor: pointer;
     }
 }
 

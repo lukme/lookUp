@@ -48,7 +48,7 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
 
     useEffect(() => {
         !icon && renderIcon();
-        formatDate()
+        formatDate();
     })
 
     const renderSubmenu = () => {
@@ -58,17 +58,20 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
                 convertedSource={convertedSource}
                 handleClick={closeSubmenu}
                 submenuOptions={options}
+                closeSubmenu={closeSubmenu}
             />
         )
     }
 
-    const closeSubmenu = (dataSelected: string | Passengers) => {
-        setDataSelected(dataSelected);
+    const closeSubmenu = (dataSelected?: string | Passengers) => {
         setSubmenuOpened(false);
-        props.passData({
-            convertedSource,
-            dataSelected,
-        });
+        if (dataSelected) {
+            setDataSelected(dataSelected);
+            props.passData({
+                convertedSource,
+                dataSelected,
+            });
+        }
     }
 
     const renderValue = () => {

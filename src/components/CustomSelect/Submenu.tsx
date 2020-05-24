@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ListItem from './ListItem';
 import { AiFillInfoCircle } from 'react-icons/ai';
+import { IoIosClose } from 'react-icons/io';
 import { Passengers } from '../MainPage/MainPage';
+import useOutsideHandler from '../ClickOutsideHandler/ClickOutsideHandler';
 
 interface Props {
     handleClick: (arg0: string | Passengers) => void;
     convertedSource: string;
     icon: JSX.Element | undefined;
     submenuOptions?: string[],
+    closeSubmenu: () => void,
 }
 
 const Submenu: React.FunctionComponent<Props> = (props: Props) => {
     const { icon, convertedSource, handleClick } = props,
         [adults, setAdults] = useState<string>('0'),
         [children, setChildren] = useState<string>('0'),
-        [babies, setBabies] = useState<string>('0');
+        [babies, setBabies] = useState<string>('0'),
+        submenuRef = useRef(null);
+
+        useOutsideHandler(props.closeSubmenu, submenuRef);
 
     const convertPassengers = () => {
         const passengers = parseInt(adults) + parseInt(children) + parseInt(babies);
@@ -47,23 +53,27 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
     const renderListItems = () => {
         const { submenuOptions } = props,
             listElements: JSX.Element[] = [];
-        // for (let i = 0; i < submenuOptions.length; i++) {
-        //     listElements.push(<ListItem data='Cracov' handleClick={handleClick} />)
-        // }
-        // @ts-ignore
-        submenuOptions.forEach(el => {
-            listElements.push(<ListItem data={el} handleClick={handleClick} />)
-        });
+        if (submenuOptions) {
+            submenuOptions.forEach(el => {
+                listElements.push(<ListItem data={el} handleClick={handleClick} />)
+            });
+        }
         return listElements;
     }
 
     return (
         convertedSource === 'Passengers'
             ? (
-                <div className="submenu submenu--passengers">
-                    <div className="flex-container">
+                <div ref={submenuRef} className="submenu submenu--passengers">
+                    <div className="flex-container submenu__header-container">
                         {icon}
                         <p className='submenu__header'>{convertedSource}</p>
+                        <IoIosClose
+                            color='#88878B'
+                            size={26}
+                            className='submenu__close'
+                            onClick={() => props.closeSubmenu()}
+                        />
                     </div>
                     <div className='passenger'>
                         <div>
@@ -144,15 +154,18 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
                 </div>
             )
             : (
-                <ul className='submenu'>
-                    <div className="flex-container">
+                <ul ref={submenuRef} className='submenu'>
+                    <div className="flex-container submenu__header-container">
                         {icon}
                         <p className='submenu__header'>{convertedSource}</p>
+                        <IoIosClose
+                            color='#88878B'
+                            size={26}
+                            className='submenu__close'
+                            onClick={() => props.closeSubmenu()}
+                        />
                     </div>
-                    {/* <ListItem data='Warsaw' handleClick={handleClick} />
-                    <ListItem data='Lodz' handleClick={handleClick} />
-                    <ListItem data='Cracov' handleClick={handleClick} /> */}
-                    {props.submenuOptions ? renderListItems() : null}
+                    {renderListItems()}
                 </ul>
             )
     );
