@@ -5,12 +5,14 @@
 
     &__options {
         height: 100%;
-        width: 20%;
+        width: 25%;
         position: absolute;
         left: 0;
         padding: $spacingR;
         box-sizing: border-box;
         background-color: $lightGray;
+        overflow: auto;
+        direction: rtl;
 
         &--aesthetical {
             width: 5%;
@@ -33,5 +35,53 @@
             background-clip: content-box;
             background-size: cover;
         }
+    }
+
+    .TransformComponent-module_container__3NwNd {
+        height: 100%;
+    }
+
+    &__option {
+        direction: initial;
+    }
+    
+    &__data {
+        color: $darkBlue;
+        font-weight: 500;
+    }
+
+    &__subtitle {
+        font-size: $fontSizeR;
+        margin-left: $spacingS;
+        font-weight: 400;
+
+        &--container {
+            color: $midGray;
+            display: flex;
+            position: relative;
+            align-items: center;
+            margin-top: 0;
+        }
+    }
+
+
+    .underline {
+        height: 1px;
+        width: 80%;
+        background-color: $midGray;
+        position: absolute;
+        bottom: 0;
+    }
+
+    .button--order {
+        margin-top: $spacingR;
+    }
+
+    &__warning {
+        margin-bottom: $spacingM;
+        direction: initial;
+        color: $warningRed;
+        font-weight: 500;
+        font-size: $fontSizeS;
     }
 }

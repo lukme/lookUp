@@ -37,6 +37,28 @@ li {
   align-items: center;
   border-radius: $smallRadius;
   border: none;
-  font-size: 1rem;
+  font-size: $fontSizeR;
   font-family: $fontFamilyMain;
+}
+
+  
+::-webkit-scrollbar {
+  width: 14px;
+  min-height: 16px;
+}
+
+::-webkit-scrollbar-track {
+  opacity: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 8px;
+  margin-left: 1px;
+  background-color: rgba($lightBlue, 0.8);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 8px;
+  &:hover {
+    background-color: $lightBlue;
+  }
 }
