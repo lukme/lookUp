@@ -23,7 +23,7 @@ Also, thanks to their authors, I could use the packages from npm listed below to
 
 ### Installation
 
-To run the project locally you have to install the dependencies and start the server. So in the application's root directory please run:
+To run the project locally you have to install the dependencies and start the server. So in the application's root directory run:
 
 ```sh
 $ npm i
@@ -36,7 +36,7 @@ Project will run on [http://localhost:3000/].
 Project finished and stable. Please go ahead and explore!
 
 ### Contact
-Designed and developed by [Lucas Mecfal](mailto:lukme00@gmail.com). Please feel free to contact me :) 
+Designed and developed by [Lucas Mecfal](mailto:lukme00@gmail.com). Feel free to contact me :) 
 
    [LookUp]: <https://look-up.netlify.app/>
    [ReactJS]: <https://reactjs.org/>
