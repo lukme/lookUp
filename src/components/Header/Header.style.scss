@@ -91,25 +91,21 @@
     border: 2px solid $white;
 }
 
-.slide {
+.appear {
     &-enter {
         opacity: 0;
-        top: -100%;
     }
 
     &-enter-active {
         opacity: 1;
-        top: $headerHeight;
     }
 
     &-leave {
         opacity: 1;
-        top: $headerHeight;
     }
 
     &-leave-active {
         opacity: 0;
-        top: -100%;
     }
 }
 
