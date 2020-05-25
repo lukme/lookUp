@@ -1,4 +1,4 @@
-# LookUp
+# [LookUp]
 
 LookUp is a flight booking application made for educational and practice purposes. Keep in mind that there is no connection to any of real flight databases or so on.
 
@@ -30,9 +30,15 @@ $ npm i
 $ npm start
 ```
 
+Project will run on [http://localhost:3000/].
+
 ### Status
 Project finished and stable. Please go ahead and explore!
 
+### Contact
+Designed and developed by [Lucas Mecfal](mailto:lukme00@gmail.com). Please feel free to contact me :) 
+
+   [LookUp]: <https://look-up.netlify.app/>
    [ReactJS]: <https://reactjs.org/>
    [Typescript]: <https://www.typescriptlang.org/>
    [ES6]: <http://www.ecma-international.org/ecma-262/6.0/>
