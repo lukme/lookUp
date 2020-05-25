@@ -47,4 +47,5 @@ Designed and developed by [Lucas Mecfal](mailto:lukme00@gmail.com). Please feel 
    [React CSS Transition Group]: <https://www.npmjs.com/package/react-addons-css-transition-group/>
    [React Icons]: <https://www.npmjs.com/package/react-icons/>
    [React Toastify]: <https://github.com/fkhadra/react-toastify/>
+   [http://localhost:3000/]: <http://localhost:3000/>
 
