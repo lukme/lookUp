@@ -4,10 +4,7 @@ import { IoMdAirplane } from 'react-icons/io';
 const Logo: React.FunctionComponent = () => {
     return (
         <div className='logo'>
-            <IoMdAirplane
-                color='#4392F1'
-                size={50}
-            />
+            <img src="./logo.png" alt="logo"/>
             <h3 className='logo__text'>LookUp</h3>
         </div>
     )

@@ -8,7 +8,8 @@ import { GiConvergenceTarget } from 'react-icons/gi';
 import { FlightData } from '../MainPage/MainPage';
 
 interface Props {
-    flightData: FlightData;
+    flightData: FlightData,
+    loginState: boolean,
 }
 
 const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
@@ -22,7 +23,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
     const formatPassengers = () => {
         setPassengers(
             parseInt(flightData.passengers.adults)
-            + parseInt(flightData.passengers.adults)
+            + parseInt(flightData.passengers.children)
             + parseInt(flightData.passengers.babies)
         )
     }
@@ -88,7 +89,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <div className="underline" />
                         </div>
                         <p className="summary__data">
-                            {flightData.origin}
+                            {flightData.luggage}
                         </p>
                     </div>
                     <button className="button button--order">

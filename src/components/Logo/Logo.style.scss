@@ -3,11 +3,17 @@
     width: 200px;
     height: 100%;
     align-items: center;
+    
+    img {
+        width: 50px;
+        height: auto;
+    }
 
     &__text {
         font-family: $fontFamilyHeader;
         font-size: $fontSizeL;
         color: $darkBlue;
-        margin-left: $spacingS;
+        margin-left: 15px;
+        font-weight: 500;
     }
 }
