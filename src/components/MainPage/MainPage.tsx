@@ -25,7 +25,7 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
     const [origin, setOrigin] = useState<string>(),
         [departure, setDeparture] = useState<string>(),
         [destination, setDestination] = useState<string>(),
-        [passengers, setPassengers] = useState<Passengers>(), // TODO: change type
+        [passengers, setPassengers] = useState<Passengers>(),
         [luggage, setLuggage] = useState<string>();
 
     const convertFlightData = (singleData: SingleData) => {
@@ -79,7 +79,7 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
                 <CustomSelect passData={convertFlightData} source='ORIGIN' />
                 <CustomSelect passData={convertFlightData} source='DEPARTURE' />
                 <CustomSelect passData={convertFlightData} source='DESTINATION' />
-                <CustomSelect passData={convertFlightData} source='PASSENGERS' />
+                <CustomSelect storedPassengers={passengers} passData={convertFlightData} source='PASSENGERS' />
                 <CustomSelect passData={convertFlightData} source='LUGGAGE' />
                 <div className="main__button">
                     <button

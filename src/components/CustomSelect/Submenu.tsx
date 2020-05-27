@@ -13,13 +13,14 @@ interface Props {
     icon: JSX.Element | undefined;
     submenuOptions?: string[],
     closeSubmenu: () => void,
+    storedPassengers?: Passengers,
 }
 
 const Submenu: React.FunctionComponent<Props> = (props: Props) => {
-    const { icon, convertedSource, handleClick } = props,
-        [adults, setAdults] = useState<string>('0'),
-        [children, setChildren] = useState<string>('0'),
-        [babies, setBabies] = useState<string>('0'),
+    const { icon, convertedSource, handleClick, storedPassengers } = props,
+        [adults, setAdults] = useState<string>(storedPassengers ? storedPassengers.adults : '0'),
+        [children, setChildren] = useState<string>(storedPassengers ? storedPassengers.children : '0'),
+        [babies, setBabies] = useState<string>(storedPassengers ? storedPassengers.babies : '0'),
         submenuRef = useRef(null);
 
         useOutsideHandler(props.closeSubmenu, submenuRef);

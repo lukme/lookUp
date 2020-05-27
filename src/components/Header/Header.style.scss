@@ -161,6 +161,10 @@
         right: 0;
         width: 100%;
 
+        &__content {
+            align-items: center;
+        }
+
         &__button.button {
             width: 100%;
         }
@@ -179,7 +183,6 @@
 
         &__content {
             padding: 20px 30%;
-            align-items: center;
         }
 
         &__image,

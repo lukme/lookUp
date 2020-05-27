@@ -47,8 +47,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
     }
 
     const triggerLogin = () => {
-        console.log(login, password)
-        toast.error('sdfasdfsaf fsdafs dfssdf afds fsdfsdfs dfsfdsfs dfsdf sdfsd fsdfsd sdfd', toastProps);
+        toast.error(`${login} /-/ ${password}`, toastProps);
         setLocalLoginState(true);
         props.setGlobalLoginState(true);
         setHeaderBoxOpened(false)
@@ -65,14 +64,20 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                     onClick={() => setHeaderBoxOpened(!headerBoxOpened)}
                 >
                     Login
-                <GiAirplane
+                {window.innerWidth > 830 && (
+                    <GiAirplane
                         color='#fff'
                         size={20}
                         className={airplaneClassName}
                     />
+                )}
                 </button>
             </div>
-            <ReactCSSTransitionGroup transitionName='appear'>
+            <ReactCSSTransitionGroup
+                transitionName='appear'
+                transitionEnterTimeout={0}
+                transitionLeaveTimeout={0}
+            >
                 {headerBoxOpened && (
                     <div className="login-box">
                         <div className="login-box__content">

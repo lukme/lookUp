@@ -9,12 +9,12 @@ import { Passengers } from '../MainPage/MainPage';
 interface Props {
     source: 'ORIGIN' | 'DEPARTURE' | 'DESTINATION' | 'PASSENGERS' | 'LUGGAGE',
     passData: (arg0: SingleData) => void,
+    storedPassengers?: Passengers | undefined,
 }
 
 export interface SingleData {
     convertedSource: string,
     dataSelected: any,
-    // dataSelected: string | Passengers ,
 }
 
 export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
@@ -60,6 +60,7 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
                 handleClick={closeSubmenu}
                 submenuOptions={options}
                 closeSubmenu={closeSubmenu}
+                storedPassengers={props.storedPassengers}
             />
         )
     }
