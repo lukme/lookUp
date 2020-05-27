@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import './App.scss';
 import { MainPage, FlightData } from './components/MainPage/MainPage';
 import Header from './components/Header/Header';

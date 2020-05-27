@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+
 import { CustomSelect, SingleData } from '../CustomSelect/CustomSelect';
 import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
-import { toast } from 'react-toastify';
 
 export interface FlightData {
     origin: string,
@@ -32,23 +33,23 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
         switch (singleData.convertedSource) {
             case 'Origin':
                 setOrigin(singleData.dataSelected);
-                break
+                break;
             case 'Departure':
                 setDeparture(singleData.dataSelected);
-                break
+                break;
             case 'Destination':
                 setDestination(singleData.dataSelected);
-                break
+                break;
             case 'Passengers':
                 setPassengers(singleData.dataSelected);
-                break
+                break;
             case 'Luggage':
                 setLuggage(singleData.dataSelected);
-                break
+                break;
             default:
-                console.error('Wrong data selected')
+                console.error('Wrong data selected');
         }
-    }
+    };
 
     const handleAccept = () => {
         if (origin && departure && destination && passengers && luggage) {
@@ -63,7 +64,7 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
         } else {
             toast.error('You have to choose all flight options', toastProps);
         }
-    }
+    };
 
     return (
         <div className="main">
@@ -92,5 +93,5 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
             </div>
             <ToastWrapper />
         </div>
-    )
-}
+    );
+};

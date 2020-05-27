@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Logo from '../Logo/Logo';
 import { GiAirplane } from 'react-icons/gi';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { FaDoorOpen } from 'react-icons/fa';
-import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
+
 import { toast } from 'react-toastify';
+import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
+import Logo from '../Logo/Logo';
 
 
 interface Props {
@@ -23,14 +24,16 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
         if (window.innerWidth > 830) {
             switch (state) {
                 case 'mouseOver':
-                    setAirplaneClassName('header__icon header__icon--center')
+                    setAirplaneClassName('header__icon header__icon--center');
                     break;
                 case 'mouseOut':
-                    setAirplaneClassName('header__icon header__icon--right')
+                    setAirplaneClassName('header__icon header__icon--right');
                     break;
+                default: 
+                    return null;
             }
         }
-    }
+    };
 
     useEffect(() => {
         handleHeaderClass();
@@ -38,20 +41,20 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
             props.setGlobalLoginState(false);
             setLocalLoginState(false);
         }, 3000);
-    }, [headerBoxOpened, localLoginState])
+    }, [headerBoxOpened, localLoginState]);
 
     const handleHeaderClass = () => {
         headerBoxOpened
             ? setHeaderClassName('header__loginBtn box--opened')
-            : setHeaderClassName('header__loginBtn box--closed')
-    }
+            : setHeaderClassName('header__loginBtn box--closed');
+    };
 
     const triggerLogin = () => {
         toast.error(`${login} /-/ ${password}`, toastProps);
         setLocalLoginState(true);
         props.setGlobalLoginState(true);
-        setHeaderBoxOpened(false)
-    }
+        setHeaderBoxOpened(false);
+    };
 
     return (
         <>
@@ -115,7 +118,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
             </ReactCSSTransitionGroup>
             <ToastWrapper />
         </>
-    )
-}
+    );
+};
 
 export default Header;

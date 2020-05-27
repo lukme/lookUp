@@ -25,8 +25,8 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
             parseInt(flightData.passengers.adults)
             + parseInt(flightData.passengers.children)
             + parseInt(flightData.passengers.babies)
-        )
-    }
+        );
+    };
 
     return (
         <>
@@ -108,6 +108,6 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
             </div>
         </>
     );
-}
+};
 
 export default SummaryPage;

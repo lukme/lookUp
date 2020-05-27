@@ -1,5 +1,6 @@
 import React from 'react';
 import { ToastContainer, ToastOptions } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 export const ToastWrapper: React.FunctionComponent = () => {

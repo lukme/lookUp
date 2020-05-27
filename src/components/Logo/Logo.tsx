@@ -1,5 +1,4 @@
 import React from 'react';
-import { IoMdAirplane } from 'react-icons/io';
 
 const Logo: React.FunctionComponent = () => {
     return (
@@ -7,7 +6,7 @@ const Logo: React.FunctionComponent = () => {
             <img src="./logo.png" alt="logo"/>
             <h3 className='logo__text'>LookUp</h3>
         </div>
-    )
-}
+    );
+};
 
 export default Logo;
