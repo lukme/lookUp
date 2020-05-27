@@ -15,6 +15,6 @@ const ListItem: React.FunctionComponent<Props> = (props: Props) => {
             {props.data}
         </li>
     );
-}
+};
 
 export default ListItem;

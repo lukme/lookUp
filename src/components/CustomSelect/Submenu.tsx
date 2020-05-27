@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
-import ListItem from './ListItem';
+import React, { useState, useRef, useEffect } from 'react';
 import { AiFillInfoCircle } from 'react-icons/ai';
 import { IoIosClose } from 'react-icons/io';
+import { toast } from 'react-toastify';
+import ListItem from './ListItem';
 import { Passengers } from '../MainPage/MainPage';
 import useOutsideHandler from '../useOutsideHandler/useOutsideHandler';
 import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
-import { toast } from 'react-toastify';
 
 interface Props {
     handleClick: (arg0: string | Passengers) => void;
@@ -13,7 +13,7 @@ interface Props {
     icon: JSX.Element | undefined;
     submenuOptions?: string[],
     closeSubmenu: () => void,
-    storedPassengers?: Passengers,
+    storedPassengers?: Passengers | undefined,
 }
 
 const Submenu: React.FunctionComponent<Props> = (props: Props) => {
@@ -41,28 +41,28 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
         } else {
             return toast.error('You have to choose at least one passenger', toastProps);
         }
-    }
+    };
 
     const renderPassengerOptions = () => {
         const options: JSX.Element[] = [];
         // const passengers = parseInt(adults) + parseInt(children) + parseInt(babies),
         // for (let i = 0; i < 10 - passengers; i++) { // TODO: when reached max - values are being affected
         for (let i = 0; i < 10; i++) {
-            options.push(<option key={i} value={i}>{i}</option>)
+            options.push(<option key={i} value={i}>{i}</option>);
         }
         return options;
-    }
+    };
 
     const renderListItems = () => {
         const { submenuOptions } = props,
             listElements: JSX.Element[] = [];
         if (submenuOptions) {
             submenuOptions.forEach(el => {
-                listElements.push(<ListItem data={el} handleClick={handleClick} />)
+                listElements.push(<ListItem data={el} handleClick={handleClick} />);
             });
         }
         return listElements;
-    }
+    };
 
     return (
         convertedSource === 'Passengers'
@@ -174,6 +174,6 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
                 </ul>
             )
     );
-}
+};
 
 export default Submenu;
