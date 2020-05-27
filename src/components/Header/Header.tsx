@@ -20,13 +20,15 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
         [localLoginState, setLocalLoginState] = useState<boolean>();
 
     const handleAirplaneClass = (state: string) => {
-        switch (state) {
-            case 'mouseOver':
-                setAirplaneClassName('header__icon header__icon--center')
-                break;
-            case 'mouseOut':
-                setAirplaneClassName('header__icon header__icon--right')
-                break;
+        if (window.innerWidth > 830) {
+            switch (state) {
+                case 'mouseOver':
+                    setAirplaneClassName('header__icon header__icon--center')
+                    break;
+                case 'mouseOut':
+                    setAirplaneClassName('header__icon header__icon--right')
+                    break;
+            }
         }
     }
 
@@ -49,6 +51,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
         toast.error('sdfasdfsaf fsdafs dfssdf afds fsdfsdfs dfsfdsfs dfsdf sdfsd fsdfsd sdfd', toastProps);
         setLocalLoginState(true);
         props.setGlobalLoginState(true);
+        setHeaderBoxOpened(false)
     }
 
     return (
@@ -77,6 +80,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                                 <FaDoorOpen
                                     size={50}
                                     color='#fff'
+                                    className='login-box__image'
                                 />
                                 <h2 className="login-box__header">
                                     {localLoginState ? 'Dupa' : 'Login'}

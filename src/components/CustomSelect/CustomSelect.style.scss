@@ -27,6 +27,7 @@
         padding-left: 45px;
         outline: none;
         cursor: text;
+        background-color: $white;
 
         &::-webkit-calendar-picker-indicator {
             position: absolute;

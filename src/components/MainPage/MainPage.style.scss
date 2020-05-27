@@ -90,3 +90,117 @@
         }
     }
 }
+
+@media only screen and (max-width: 1024px) and (orientation: portrait) {
+    .main {
+        padding: 0;
+
+        &__banner {
+            height: 40vh;
+        }
+
+        &__selectContainer {
+            bottom: -200px;
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+    .main {
+        padding: 0;
+
+        &__banner {
+            height: 52vh;
+        }
+
+        &__selectContainer {
+            bottom: -200px;
+        }
+    }
+}
+
+@media only screen and (max-width: 420px) and (orientation: portrait) {
+    .main {
+        padding: 40px 0;
+
+        &__banner {
+            height: 100vh;
+        }
+
+        &__image {
+            width: 100%;
+            border-radius: 0;
+        }
+
+        &__textbox {
+            max-width: 100%;
+            font-size: 2rem;
+            padding: 30px 10% 30px 10%;
+        }
+
+        &__selectContainer {
+            left: 0;
+            bottom: -24vh;
+            width: 100%;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        &__button {
+            width: 200px;
+        }
+
+        .select {
+            &__button {
+                height: 40px;
+                width: 200px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 420px) and (orientation: portrait) {
+    .main {
+        &__banner {
+            height: 100vh;
+        }
+
+        &__image {
+            width: 100%;
+            border-radius: 0;
+        }
+    }
+}
+
+@media only screen and (max-width: 830px) and (orientation: landscape) {
+    .main {
+        &__banner {
+            height: calc(100vh - 70px);
+            margin: 70px 0 0 0;
+        }
+
+        &__textbox {
+            max-width: 80%;
+            font-size: 2rem;
+        }
+
+        &__selectContainer {
+            position: initial;
+            width: 100%;
+            border-radius: 0;
+            box-shadow: none;
+            left: 0;
+            bottom: -140vh;
+            width: 100%;
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .select__button,
+        &__button {
+            width: 380px;
+        }
+    }
+}

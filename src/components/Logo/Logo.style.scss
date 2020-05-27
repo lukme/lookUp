@@ -17,3 +17,9 @@
         font-weight: 500;
     }
 }
+
+@media only screen and (max-width: 830px) and (orientation: landscape) {
+    .logo img {
+        width: 35px;
+    }
+}
