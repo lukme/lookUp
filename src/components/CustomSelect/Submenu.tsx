@@ -4,6 +4,8 @@ import { AiFillInfoCircle } from 'react-icons/ai';
 import { IoIosClose } from 'react-icons/io';
 import { Passengers } from '../MainPage/MainPage';
 import useOutsideHandler from '../useOutsideHandler/useOutsideHandler';
+import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
+import { toast } from 'react-toastify';
 
 interface Props {
     handleClick: (arg0: string | Passengers) => void;
@@ -26,9 +28,9 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
         const passengers = parseInt(adults) + parseInt(children) + parseInt(babies);
         if (parseInt(adults) + parseInt(children) + parseInt(babies) !== 0) {
             if (parseInt(adults) + parseInt(children) === 0 && parseInt(babies) !== 0) {
-                return alert('Babies cannot fly on their own!')
+                return toast.error('Babies cannot fly on their own!', toastProps);
             } else if (passengers > 9) {
-                return alert('You cannot select more than 9 passengers')
+                return toast.error('You cannot select more than 9 passengers', toastProps);
             }
             return handleClick({
                 adults,
@@ -36,7 +38,7 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
                 babies,
             });
         } else {
-            return alert('You have to choose at least one passenger');
+            return toast.error('You have to choose at least one passenger', toastProps);
         }
     }
 
@@ -151,6 +153,7 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
                     <p className='submenu__subtext'>
                         Babies travel free of charge
                     </p>
+                    <ToastWrapper />
                 </div>
             )
             : (
@@ -166,6 +169,7 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
                         />
                     </div>
                     {renderListItems()}
+                    <ToastWrapper />
                 </ul>
             )
     );

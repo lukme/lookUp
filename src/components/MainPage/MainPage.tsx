@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { CustomSelect, SingleData } from '../CustomSelect/CustomSelect';
+import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
+import { toast } from 'react-toastify';
 
 export interface FlightData {
     origin: string,
@@ -59,7 +61,7 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
             };
             props.passDataBackwards(localFlightData);
         } else {
-            alert('You have to choose all flight options');
+            toast.error('You have to choose all flight options', toastProps);
         }
     }
 
@@ -88,6 +90,7 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
                     </button>
                 </div>
             </div>
+            <ToastWrapper />
         </div>
     )
 }
