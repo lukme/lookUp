@@ -22,7 +22,10 @@ function App() {
 
     return (
         <div className="App">
-            <Header setGlobalLoginState={(arg) => setLoginState(arg)}/>
+            <Header
+                resetFlightData={() => setFlightData(undefined)}
+                setGlobalLoginState={(arg) => setLoginState(arg)}
+            />
             {!flightData
                 ? <MainPage passDataBackwards={setFlightData} />
                 : <SummaryPage loginState={loginState} flightData={flightData} />}

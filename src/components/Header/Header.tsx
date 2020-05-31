@@ -9,6 +9,7 @@ import Logo from '../Logo/Logo';
 
 
 interface Props {
+    resetFlightData: () => void,
     setGlobalLoginState: (arg0: boolean) => void,
 }
 
@@ -29,7 +30,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                 case 'mouseOut':
                     setAirplaneClassName('header__icon header__icon--right');
                     break;
-                default: 
+                default:
                     return null;
             }
         }
@@ -59,7 +60,9 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
     return (
         <>
             <div className='header'>
-                <Logo />
+                <div onClick={props.resetFlightData}>
+                    <Logo />
+                </div>
                 <button
                     className={headerClassName}
                     onMouseOver={() => handleAirplaneClass('mouseOver')}
@@ -67,13 +70,13 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                     onClick={() => setHeaderBoxOpened(!headerBoxOpened)}
                 >
                     Login
-                {window.innerWidth > 830 && (
-                    <GiAirplane
-                        color='#fff'
-                        size={20}
-                        className={airplaneClassName}
-                    />
-                )}
+                {window.innerWidth > 1024 && (
+                        <GiAirplane
+                            color='#fff'
+                            size={20}
+                            className={airplaneClassName}
+                        />
+                    )}
                 </button>
             </div>
             <ReactCSSTransitionGroup

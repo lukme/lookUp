@@ -44,7 +44,7 @@
     &__option {
         direction: initial;
     }
-    
+
     &__data {
         color: $darkBlue;
         font-weight: 500;
@@ -75,13 +75,113 @@
 
     .button--order {
         margin-top: $spacingR;
-    }
-
-    &__warning {
         margin-bottom: $spacingM;
-        direction: initial;
-        color: $warningRed;
-        font-weight: 500;
-        font-size: $fontSizeS;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .summary {
+        margin: 0;
+
+        &__options {
+            top: 90px;
+            height: calc(100vh - 90px);
+            width: 30%;
+        }
+
+        &__options--aesthetical {
+            display: none;
+        }
+
+        &__airplane {
+            top: 90px;
+            left: 30%;
+            height: calc(100vh - 90px);
+        }
+    }
+}
+
+@media only screen and (max-width: 1024px)  and (orientation: portrait) {
+    .summary {
+        margin: 0;
+
+        &__options {
+            top: 90px;
+            height: calc(100vh - 90px);
+            width: 30%;
+        }
+
+        &__options--aesthetical {
+            display: none;
+        }
+
+        &__airplane {
+            top: 90px;
+            left: 30%;
+            height: calc(100vh - 90px);
+        }
+    }
+}
+
+@media only screen and (max-width: 830px) and (orientation: landscape) {
+    .summary {
+        &__options {
+            top: 70px;
+            height: calc(100vh - 70px);
+        }
+
+        &__airplane {
+            top: 70px;
+        }
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .summary {
+        margin: 0;
+
+        &__options {
+            height: 140px;
+            width: 100%;
+            top: 90px;
+            padding: 20px 20px 0 20px;
+            direction: initial;
+            display: flex;
+        }
+
+        &__option {
+            z-index: 2;
+            padding-right: 30px;
+        }
+
+        .button--order {
+            z-index: 2;
+            position: fixed;
+            top: 170px;
+            left: calc(50% - 75px);
+            margin: 0;
+            width: 150px !important;
+        }
+
+        &__subtitle,
+        .underline,
+        &__options--aesthetical {
+            display: none;
+        }
+
+        &__subtitle--container {
+            margin-bottom: 0;
+        }
+
+        &__data {
+            width: max-content;
+            margin: 5px 0;
+        }
+
+        &__airplane {
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
     }
 }

@@ -95,7 +95,6 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                     <button className="button button--order">
                         Order
                     </button>
-                    <p className='summary__warning'>You have to be logged in to finalize your order</p>
                 </div>
                 <div className="summary__airplane">
                     <TransformWrapper>
