@@ -11,6 +11,7 @@
     "@types/react": "^16.9.0",
     "@types/react-addons-css-transition-group": "^15.0.5",
     "@types/react-dom": "^16.9.0",
+    "eslint": "^6.6.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-addons-css-transition-group": "^15.6.2",
@@ -46,7 +47,6 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.0.2",
     "@typescript-eslint/parser": "^3.0.2",
-    "eslint": "^7.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-react": "^7.20.0"
   }
