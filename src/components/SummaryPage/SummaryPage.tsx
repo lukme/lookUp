@@ -33,13 +33,13 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
             <div className="summary">
                 <div className="summary__options">
                     <div className="summary__option">
-                        <h3 className="summary__subtitle--container">
+                        <div className="summary__subtitle--container">
                             <AiOutlineHome size={20} />
                             <h3 className="summary__subtitle">
                                 Origin
                             </h3>
                             <div className="underline" />
-                        </h3>
+                        </div>
                         <p className="summary__data">
                             {flightData.origin}
                         </p>

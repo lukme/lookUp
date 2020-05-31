@@ -18,6 +18,13 @@ export interface SingleData {
     dataSelected: any,
 }
 
+export const formatMaxDate = () => {
+    const today = new Date().toISOString().split("T")[0],
+        yearFromNow = parseInt(today.substring(0,4)) + 1,
+        maxDate = (`${yearFromNow}-${today.substring(5)}`);
+    return maxDate;
+};
+
 export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
     const [submenuOpened, setSubmenuOpened] = useState<boolean>(false),
         [icon, setIcon] = useState<JSX.Element>(),
@@ -84,13 +91,6 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
                 : convertedSource;
         }
         return !dataSelected ? convertedSource : dataSelected;
-    };
-
-    const formatMaxDate = () => {
-        const today = new Date().toISOString().split("T")[0],
-            yearFromNow = parseInt(today.substring(0,4)) + 1,
-            maxDate = (`${yearFromNow}-${today.substring(5)}`);
-        return maxDate;
     };
 
     const convertToday = () => {

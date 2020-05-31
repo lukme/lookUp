@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { CustomSelect, SingleData } from '../CustomSelect/CustomSelect';
+import { CustomSelect, SingleData, formatMaxDate } from '../CustomSelect/CustomSelect';
 import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
 
 export interface FlightData {
@@ -51,7 +51,18 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
         }
     };
 
+    // extra protection - build-in input's max/min date prop does not work correctly if date was inserted by hand
+    const checkDate = (localDeparture: string) => {
+        const today = new Date(),
+            dateSelected = new Date(localDeparture),
+            maxDate = new Date(formatMaxDate());
+        return (dateSelected <= maxDate && dateSelected >= today);
+    };
+
     const handleAccept = () => {
+        if (departure && !checkDate(departure)) {
+            return toast.error('You have chosen wrong flight date.', toastProps);
+        }
         if (origin && departure && destination && passengers && luggage) {
             const localFlightData = {
                 origin,
