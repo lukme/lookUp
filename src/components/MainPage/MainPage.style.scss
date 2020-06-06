@@ -2,6 +2,7 @@
     padding: $wrapperSpacing;
     margin: $spacingM 0 200px 0;
     position: relative;
+    top: $headerHeight;
 
     &__banner {
         background-color: $lightGray;
@@ -122,6 +123,7 @@
 @media only screen and (max-width: 420px) {
     .main {
         padding: 40px 0;
+        top: 0;
 
         &__banner {
             height: 100vh;
@@ -160,21 +162,10 @@
     }
 }
 
-@media only screen and (max-width: 420px) {
-    .main {
-        &__banner {
-            height: 100vh;
-        }
-
-        &__image {
-            width: 100%;
-            border-radius: 0;
-        }
-    }
-}
-
 @media only screen and (max-width: 830px) and (orientation: landscape) {
     .main {
+        top: 0;
+        
         &__banner {
             height: calc(100vh - 70px);
             margin: 70px 0 0 0;

@@ -1,10 +1,14 @@
 .header {
+    position: fixed;
+    top: 0;
     padding: $wrapperSpacing;
     height: $headerHeight;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $white;
     box-shadow: $mainShadow;
     display: flex;
     justify-content: space-between;
-    position: relative;
     z-index: 10;
 
     &__loginBtn {
@@ -51,7 +55,7 @@
 .login-box {
     background-color: $darkBlue;
     border-radius: $loginBoxRadius;
-    position: absolute;
+    position: fixed;
     top: $headerHeight;
     right: 8%;
     z-index: 5;
@@ -175,12 +179,13 @@
 @media only screen and (max-width: 830px) and (orientation: landscape) {
     .header {
         height: 70px;
-        position: absolute;
+        position: fixed;
+        top: 0;
     }
 
     .login-box {
         top: 70px;
-        position: absolute;
+        position: fixed;
         height: calc(100vh - 70px);
 
         &__content {

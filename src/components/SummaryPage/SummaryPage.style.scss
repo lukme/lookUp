@@ -8,6 +8,7 @@
         width: 25%;
         position: absolute;
         left: 0;
+        top: $headerHeight;
         padding: $spacingR;
         box-sizing: border-box;
         background-color: $lightGray;
@@ -25,6 +26,7 @@
     &__airplane {
         position: absolute;
         left: 25%;
+        top: $headerHeight;
         width: 70%;
         height: 100%;
 
@@ -134,6 +136,7 @@
 
         &__airplane {
             top: 70px;
+            height: calc(100vh - 70px);
         }
     }
 }
