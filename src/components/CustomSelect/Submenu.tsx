@@ -64,6 +64,17 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
         return listElements;
     };
 
+    const remainingPassengers = () => {
+        const remainingPassengers = 9 - (parseInt(adults) + parseInt(children) + parseInt(babies));
+        if (remainingPassengers > 0) {
+            return `You can choose ${remainingPassengers} more passengers`;
+        } else if (remainingPassengers === 0) {
+            return 'You can\'t choose any more passengers';
+        } else {
+            return 'You selected too many passengers!';
+        }
+    };
+
     return (
         convertedSource === 'Passengers'
             ? (
@@ -149,7 +160,7 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
                         </p>
                     </div>
                     <p className='submenu__subtext'>
-                        You can choose up to 9 passengers
+                        {remainingPassengers()}
                     </p>
                     <p className='submenu__subtext'>
                         Babies travel free of charge
