@@ -53,5 +53,6 @@ module.exports = {
         ],
         "no-extra-semi": "warn",
         "default-case": "warn",
+        "react/no-unknown-property": "warn",
     }
 };
