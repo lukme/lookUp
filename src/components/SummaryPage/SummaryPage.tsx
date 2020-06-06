@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 import { toastProps } from '../Toast.tsx/Toast';
 import { FlightData } from '../MainPage/MainPage';
-import Airplane from '../Airplanes/Airplane';
+import Airplane from '../Airplanes/Airbus-A320';
 
 
 interface Props {
