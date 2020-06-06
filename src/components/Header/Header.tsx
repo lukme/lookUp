@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { GiAirplane } from 'react-icons/gi';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { FaDoorOpen } from 'react-icons/fa';
-
 import { toast } from 'react-toastify';
+
 import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
 import Logo from '../Logo/Logo';
 
@@ -13,13 +13,17 @@ interface Props {
     setGlobalLoginState: (arg0: boolean) => void,
 }
 
+export type FetchState = 'NotFetched' | 'IsFetching' | 'ErrorFetching' | 'Fetched';
+
 const Header: React.FunctionComponent<Props> = (props: Props) => {
     const [airplaneClassName, setAirplaneClassName] = useState<string>('header__icon'),
         [headerBoxOpened, setHeaderBoxOpened] = useState<boolean>(false),
         [headerClassName, setHeaderClassName] = useState<string>('header__loginBtn box--closed'),
         [login, setLogin] = useState<string>(),
         [password, setPassword] = useState<string>(),
-        [localLoginState, setLocalLoginState] = useState<boolean>();
+        [localLoginState, setLocalLoginState] = useState<boolean>(),
+        [loginUserName, setLoginUserName] = useState<string | null>(),
+        fetchUsersUrl = 'https://api.jsonbin.io/b/5edb8db51f9e4e5788186775';
 
     const handleAirplaneClass = (state: string) => {
         if (window.innerWidth > 830) {
@@ -41,7 +45,9 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
         localLoginState && setTimeout(() => {
             props.setGlobalLoginState(false);
             setLocalLoginState(false);
-        }, 3000);
+            setLoginUserName(null);
+            toast.error('You have been logged out', toastProps);
+        }, 180000);
     }, [headerBoxOpened, localLoginState]);
 
     const handleHeaderClass = () => {
@@ -51,10 +57,33 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
     };
 
     const triggerLogin = () => {
-        toast.error(`${login} /-/ ${password}`, toastProps);
-        setLocalLoginState(true);
-        props.setGlobalLoginState(true);
-        setHeaderBoxOpened(false);
+        if (login && password) {
+            checkCredits();
+        } else {
+            toast.error('You have to pass both login and password', toastProps);
+        }
+    };
+
+    const checkCredits = () => {
+        fetch(fetchUsersUrl)
+            .then(response => response.json())
+            .then(response => {
+                let isAuthenticated = false;
+                for (const user in response) {
+                    if (!loginUserName
+                        && response[user].login === login && response[user].password === password) {
+                        setLoginUserName(response[user].login);
+                        setHeaderBoxOpened(false);
+                        setLocalLoginState(true);
+                        props.setGlobalLoginState(true);
+                        isAuthenticated = true;
+                    }
+                }
+                !isAuthenticated && toast.error('Wrong creditentials', toastProps);
+            })
+            .catch(error => {
+                console.warn(error);
+            });
     };
 
     return (
@@ -67,10 +96,16 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                     className={headerClassName}
                     onMouseOver={() => handleAirplaneClass('mouseOver')}
                     onMouseOut={() => handleAirplaneClass('mouseOut')}
-                    onClick={() => setHeaderBoxOpened(!headerBoxOpened)}
+                    onClick={() => {
+                        setHeaderBoxOpened(!headerBoxOpened);
+                        setLogin('');
+                        setPassword('');
+                    }}
                 >
-                    Login
-                {window.innerWidth > 1024 && (
+                    {!loginUserName
+                        ? 'Login'
+                        : loginUserName}
+                    {window.innerWidth > 1024 && (
                         <GiAirplane
                             color='#fff'
                             size={20}
@@ -94,7 +129,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                                     className='login-box__image'
                                 />
                                 <h2 className="login-box__header">
-                                    {localLoginState ? 'Dupa' : 'Login'}
+                                    Login
                                 </h2>
                             </div>
                             <input
