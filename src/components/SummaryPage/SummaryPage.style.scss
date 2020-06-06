@@ -103,7 +103,7 @@
     }
 }
 
-@media only screen and (max-width: 1024px)  and (orientation: portrait) {
+@media only screen and (max-width: 1024px) and (orientation: portrait) {
     .summary {
         margin: 0;
 
@@ -181,7 +181,8 @@
         }
 
         &__airplane {
-            top: 0;
+            top: 230px;
+            height: calc(100vh - 230px);
             left: 0;
             width: 100%;
         }
