@@ -7,16 +7,18 @@ import SummaryPage from './components/SummaryPage/SummaryPage';
 
 function App() {
     const [flightData, setFlightData] = useState<FlightData>(),
-        [loginState, setLoginState] = useState<boolean>(false);
+        [loginState, setLoginState] = useState(false),
+        [loginConflict, setLoginConflict] = useState(false);
+
     // !flightData && setFlightData({
     //     departure: "2020-06-04",
     //     destination: "Vienna",
     //     luggage: "Carry-on & trolley",
     //     origin: "Lodz",
     //     passengers: {
-    //         adults: "3",
-    //         babies: "1",
-    //         children: "2",
+    //         adults: "2",
+    //         babies: "0",
+    //         children: "0",
     //     }
     // });
 
@@ -25,10 +27,16 @@ function App() {
             <Header
                 resetFlightData={() => setFlightData(undefined)}
                 setGlobalLoginState={(arg) => setLoginState(arg)}
+                loginConflict={loginConflict}
+                resetLoginConflict={() => setLoginConflict(false)}
             />
             {!flightData
                 ? <MainPage passDataBackwards={setFlightData} />
-                : <SummaryPage loginState={loginState} flightData={flightData} />}
+                : <SummaryPage
+                    loginState={loginState}
+                    flightData={flightData}
+                    forceOpeningHeaderBox={() => setLoginConflict(true)}
+                />}
         </div>
     );
 }

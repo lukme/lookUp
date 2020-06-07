@@ -11,6 +11,8 @@ import Logo from '../Logo/Logo';
 interface Props {
     resetFlightData: () => void,
     setGlobalLoginState: (arg0: boolean) => void,
+    loginConflict: boolean,
+    resetLoginConflict: () => void;
 }
 
 export type FetchState = 'NotFetched' | 'IsFetching' | 'ErrorFetching' | 'Fetched';
@@ -48,7 +50,8 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
             setLoginUserName(null);
             toast.error('You have been logged out', toastProps);
         }, 180000);
-    }, [headerBoxOpened, localLoginState]);
+        (props.loginConflict && !localLoginState) && setHeaderBoxOpened(true);
+    }, [headerBoxOpened, localLoginState, props.loginConflict]);
 
     const handleHeaderClass = () => {
         headerBoxOpened
@@ -57,6 +60,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
     };
 
     const triggerLogin = () => {
+        props.resetLoginConflict();
         if (login && password) {
             checkCredits();
         } else {
@@ -78,6 +82,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                         props.setGlobalLoginState(true);
                         isAuthenticated = true;
                     }
+                    isAuthenticated && props.resetLoginConflict();
                 }
                 !isAuthenticated && toast.error('Wrong creditentials', toastProps);
             })
@@ -100,6 +105,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                         setHeaderBoxOpened(!headerBoxOpened);
                         setLogin('');
                         setPassword('');
+                        props.resetLoginConflict();
                     }}
                 >
                     {!loginUserName

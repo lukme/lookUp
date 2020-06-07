@@ -10,19 +10,22 @@ import { toastProps } from '../Toast.tsx/Toast';
 import { FlightData } from '../MainPage/MainPage';
 import Airplane from '../Airplanes/Airbus-A320';
 
-
 interface Props {
     flightData: FlightData,
     loginState: boolean,
+    forceOpeningHeaderBox: () => void;
 }
 
 const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
     const { flightData } = props,
         [passengers, setPassengers] = useState<number>(),
-        [chosenSeats, setChosenSeats] = useState<number>();
+        [chosenSeats, setChosenSeats] = useState<string[]>([]),
+        seatsOccupied = ['seat-2', 'seat-9', 'seat-24', 'seat-60', 'seat-93', 'seat-94', 'seat-95', 'seat-96', 'seat-97', 'seat-98', 'seat-99', 'seat-109', 'seat-120', 'seat-121', 'seat-139', 'seat-153'],
+        [occupiedState, setOccupiedState] = useState<boolean>(false);
 
     useEffect(() => {
         !passengers && formatPassengers();
+        !occupiedState && handleOccupiedSeats();
     });
 
     const formatPassengers = () => {
@@ -33,16 +36,46 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
         );
     };
 
+    const handleOccupiedSeats = () => {
+        // Exceptional hack for forcing occupied seats
+        const seats = document.querySelectorAll('path');
+        for (let i = 0; i < seats.length; i++) {
+            seatsOccupied.filter(id => id === seats[i].id).length !== 0
+                && seats[i].setAttribute('fill', '#E36363');
+        }
+        setOccupiedState(true);
+    };
+
     const handleSvgClick = (e: any) => {
-        const fill = e.target.getAttribute('fill'),
-            newColor = fill === '#AFAFAF' ? '#4ED38C' : '#AFAFAF';
+        const fill = e.target.getAttribute('fill');
+        let localChosenSeats = chosenSeats,
+            newColor: string;
+
+        if (fill === '#AFAFAF') {
+            if ((chosenSeats && passengers) && chosenSeats.length >= passengers) {
+                toast.error('You chose all seats you selected', toastProps);
+                return;
+            }
+            newColor = '#4ED38C';
+            chosenSeats
+                ? setChosenSeats([...chosenSeats, e.target.id])
+                : setChosenSeats(e.target.id);
+        } else {
+            newColor = '#AFAFAF';
+            localChosenSeats = localChosenSeats.filter(element => element !== e.target.id);
+            setChosenSeats(localChosenSeats);
+        }
         e.target.setAttribute('fill', newColor);
-        setChosenSeats(e.target.id);
     };
 
     const handleOrder = () => {
         if (!props.loginState) {
+            props.forceOpeningHeaderBox();
             toast.error('You have to be logged in to submit your order', toastProps);
+        } else if (props.loginState && chosenSeats.length !== passengers) {
+            toast.error('You have to choose all your seats first', toastProps);
+        } else {
+            toast.error('That\'s the end of the road! You just booked a flight!', toastProps);
         }
     };
 
@@ -118,6 +151,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                     </button>
                 </div>
                 <div className="summary__airplane">
+                    <p className="summary__selected">Seats selected {chosenSeats.length} / {passengers}</p>
                     <TransformWrapper>
                         <TransformComponent>
                             <Airplane handleSeatSelection={handleSvgClick} />

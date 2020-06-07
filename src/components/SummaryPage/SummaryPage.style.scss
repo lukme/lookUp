@@ -39,6 +39,21 @@
         }
     }
 
+    &__selected {
+        position: absolute;
+        top: 5px;
+        left: 10px;
+        font-size: $fontSizeM;
+        z-index: 2;
+        font-family: $fontFamilyHeader;
+        font-weight: 400;
+        color: $lightBlue;
+        pointer-events: none;
+        background-color: $white;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
     .TransformComponent-module_container__3NwNd,
     .TransformComponent-module_content__TZU5O {
         height: 100%;
@@ -124,6 +139,12 @@
             left: 30%;
             height: calc(100vh - 90px);
         }
+
+        &__selected {
+            top: 30px;
+            left: 40px;
+            font-size: 2.2rem;
+        }
     }
 }
 
@@ -188,6 +209,12 @@
             height: calc(100vh - 230px);
             left: 0;
             width: 100%;
+        }
+
+        &__selected {
+            top: 0;
+            left: 0;
+            font-size: 1rem;
         }
     }
 }
