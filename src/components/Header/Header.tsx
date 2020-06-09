@@ -16,7 +16,7 @@ interface Props {
     resetLoginConflict: () => void;
 }
 
-export type FetchState = 'NotFetched' | 'IsFetching' | 'ErrorFetching' | 'Fetched';
+export type FetchState = 'NotFetched' | 'IsFetching' | 'Fetched';
 
 const Header: React.FunctionComponent<Props> = (props: Props) => {
     const [airplaneClassName, setAirplaneClassName] = useState<string>('header__icon'),
@@ -100,7 +100,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
             })
             .catch(error => {
                 console.warn(error);
-                setFetchState('ErrorFetching');
+                setFetchState('NotFetched');
             });
     };
 
@@ -170,7 +170,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                                 {fetchState === 'IsFetching' && !localLoginState
                                     ? (
                                         <Loader
-                                            type="Oval"
+                                            type="BallTriangle"
                                             color="#fff"
                                             height={20}
                                             width={20}
