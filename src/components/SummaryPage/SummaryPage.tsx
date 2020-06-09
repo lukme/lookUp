@@ -4,11 +4,14 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { FaLuggageCart, FaRegCalendarAlt } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { GiConvergenceTarget } from 'react-icons/gi';
+import { RiWalletLine } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 
 import { toastProps } from '../Toast.tsx/Toast';
 import { FlightData } from '../MainPage/MainPage';
-import Airplane from '../Airplanes/Airbus-A320';
+import Airbus320 from '../Airplanes/Airbus-A320';
+import Airbus350 from '../Airplanes/Airbus-A350';
+import EmbraerE145 from '../Airplanes/Embraer-E145';
 
 interface Props {
     flightData: FlightData,
@@ -143,6 +146,18 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             {flightData.luggage}
                         </p>
                     </div>
+                    <div className="summary__option">
+                        <div className="summary__subtitle--container">
+                            <RiWalletLine size={20} />
+                            <h3 className="summary__subtitle">
+                                Cost
+                            </h3>
+                            <div className="underline" />
+                        </div>
+                        <p className="summary__data">
+                            10502 $
+                        </p>
+                    </div>
                     <button
                         className="button button--order"
                         onClick={handleOrder}
@@ -154,7 +169,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                     <p className="summary__selected">Seats selected {chosenSeats.length} / {passengers}</p>
                     <TransformWrapper>
                         <TransformComponent>
-                            <Airplane handleSeatSelection={handleSvgClick} />
+                            <Airbus350 handleSeatSelection={handleSvgClick} />
                         </TransformComponent>
                     </TransformWrapper>
                 </div>
