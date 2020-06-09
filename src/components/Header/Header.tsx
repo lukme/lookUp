@@ -3,6 +3,7 @@ import { GiAirplane } from 'react-icons/gi';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { FaDoorOpen } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import Loader from 'react-loader-spinner';
 
 import { ToastWrapper, toastProps } from '../Toast.tsx/Toast';
 import Logo from '../Logo/Logo';
@@ -25,6 +26,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
         [password, setPassword] = useState<string>(),
         [localLoginState, setLocalLoginState] = useState<boolean>(),
         [loginUserName, setLoginUserName] = useState<string | null>(),
+        [fetchState, setFetchState] = useState<FetchState>(),
         fetchUsersUrl = 'https://api.jsonbin.io/b/5edb8db51f9e4e5788186775';
 
     const handleAirplaneClass = (state: string) => {
@@ -48,6 +50,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
             props.setGlobalLoginState(false);
             setLocalLoginState(false);
             setLoginUserName(null);
+            setFetchState('NotFetched');
             toast.error('You have been logged out', toastProps);
         }, 180000);
         (props.loginConflict && !localLoginState) && setHeaderBoxOpened(true);
@@ -61,6 +64,13 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
 
     const triggerLogin = () => {
         props.resetLoginConflict();
+        if (localLoginState) {
+            props.setGlobalLoginState(false);
+            setLocalLoginState(false);
+            setLoginUserName(null);
+            setFetchState('NotFetched');
+            return;
+        }
         if (login && password) {
             checkCredits();
         } else {
@@ -69,6 +79,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
     };
 
     const checkCredits = () => {
+        setFetchState('IsFetching');
         fetch(fetchUsersUrl)
             .then(response => response.json())
             .then(response => {
@@ -85,9 +96,11 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                     isAuthenticated && props.resetLoginConflict();
                 }
                 !isAuthenticated && toast.error('Wrong creditentials', toastProps);
+                setFetchState('Fetched');
             })
             .catch(error => {
                 console.warn(error);
+                setFetchState('ErrorFetching');
             });
     };
 
@@ -154,7 +167,18 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                                 className="button login-box__button"
                                 onClick={triggerLogin}
                             >
-                                Login
+                                {fetchState === 'IsFetching' && !localLoginState
+                                    ? (
+                                        <Loader
+                                            type="Oval"
+                                            color="#fff"
+                                            height={20}
+                                            width={20}
+                                        />
+                                    )
+                                    : !localLoginState
+                                        ? 'Login'
+                                        : 'Logout'}
                             </button>
                         </div>
                     </div>

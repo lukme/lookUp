@@ -67,6 +67,15 @@
         padding: 60px;
     }
 
+    &__loader {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+
     &__input {
         border-radius: $smallRadius;
         border: 2px solid $lightBlue;
