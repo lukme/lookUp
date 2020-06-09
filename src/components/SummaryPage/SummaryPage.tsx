@@ -6,12 +6,14 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { GiConvergenceTarget } from 'react-icons/gi';
 import { RiWalletLine } from 'react-icons/ri';
 import { toast } from 'react-toastify';
+import Loader from 'react-loader-spinner';
 
 import { toastProps } from '../Toast.tsx/Toast';
 import { FlightData } from '../MainPage/MainPage';
 import Airbus320 from '../Airplanes/Airbus-A320';
 import Airbus350 from '../Airplanes/Airbus-A350';
 import EmbraerE145 from '../Airplanes/Embraer-E145';
+import { FetchState } from '../Header/Header';
 
 interface Props {
     flightData: FlightData,
@@ -19,16 +21,42 @@ interface Props {
     forceOpeningHeaderBox: () => void;
 }
 
+type Flight = {
+    origin: string;
+    destination: string;
+    time: string;
+    airplane: string;
+    adultSeatCost: string;
+    childrenSeatCost: string;
+    babiesSeatCost: string;
+    trolleyCost: string;
+}
+
+type AirplaneSize = 'SMALL' | 'MEDIUM' | 'LARGE';
+
 const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
     const { flightData } = props,
         [passengers, setPassengers] = useState<number>(),
         [chosenSeats, setChosenSeats] = useState<string[]>([]),
-        seatsOccupied = ['seat-2', 'seat-9', 'seat-24', 'seat-60', 'seat-93', 'seat-94', 'seat-95', 'seat-96', 'seat-97', 'seat-98', 'seat-99', 'seat-109', 'seat-120', 'seat-121', 'seat-139', 'seat-153'],
-        [occupiedState, setOccupiedState] = useState<boolean>(false);
+        seatsOccupied = ['seat-2', 'seat-9', 'seat-24', 'seat-35', 'seat-36', 'seat-40', 'seat-49', 'seat-60', 'seat-93', 'seat-94', 'seat-95', 'seat-96', 'seat-97', 'seat-98', 'seat-99', 'seat-109', 'seat-120', 'seat-121', 'seat-139', 'seat-153', 'seat-253', 'seat-260', 'seat-269', 'seat-295', 'seat-296', 'seat-299'],
+        [occupiedState, setOccupiedState] = useState<boolean>(false),
+        [fetchState, setFetchState] = useState<FetchState>(),
+        [airplaneSelected, setAirplaneSelected] = useState<AirplaneSize>(),
+        [cost, setCost] = useState<number>(0),
+        fetchFlightsUrl = 'https://api.jsonbin.io/b/5edfe2712f5fd957fda70142',
+        smallLoader = (
+            <Loader
+                type="BallTriangle"
+                color="#4392F1"
+                height={20}
+                width={20}
+            />
+        );
 
     useEffect(() => {
         !passengers && formatPassengers();
-        !occupiedState && handleOccupiedSeats();
+        (!occupiedState && airplaneSelected) && handleOccupiedSeats();
+        fetchState !== 'Fetched' && fetchData();
     });
 
     const formatPassengers = () => {
@@ -41,7 +69,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
 
     const handleOccupiedSeats = () => {
         // Exceptional hack for forcing occupied seats
-        const seats = document.querySelectorAll('path');
+        const seats = document.querySelectorAll(airplaneSelected === 'SMALL' ? 'rect' : 'path');
         for (let i = 0; i < seats.length; i++) {
             seatsOccupied.filter(id => id === seats[i].id).length !== 0
                 && seats[i].setAttribute('fill', '#E36363');
@@ -55,14 +83,16 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
             newColor: string;
 
         if (fill === '#AFAFAF') {
-            if ((chosenSeats && passengers) && chosenSeats.length >= passengers) {
+            if (passengers && chosenSeats.length >= passengers) {
                 toast.error('You chose all seats you selected', toastProps);
                 return;
             }
             newColor = '#4ED38C';
             chosenSeats
-                ? setChosenSeats([...chosenSeats, e.target.id])
+                ? setChosenSeats(prevState => [...prevState, e.target.id])
                 : setChosenSeats(e.target.id);
+        } else if (fill === '#E36363') {
+            return;
         } else {
             newColor = '#AFAFAF';
             localChosenSeats = localChosenSeats.filter(element => element !== e.target.id);
@@ -82,6 +112,58 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
         }
     };
 
+    const fetchData = () => {
+        setFetchState('IsFetching');
+        fetch(fetchFlightsUrl)
+            .then(response => response.json())
+            .then(response => {
+                setFetchState('Fetched');
+                handleFetchedData(response.flights);
+            })
+            .catch(error => {
+                console.warn(error);
+                setFetchState('NotFetched');
+            });
+    };
+
+    const handleFetchedData = (airplaneData: Flight[]) => {
+        const currentFlightData = airplaneData.filter((flight) => flight.destination === flightData.destination)[0];
+
+        // Select airplane graphics
+        switch (currentFlightData.airplane) {
+            case 'Embraer E145':
+                setAirplaneSelected('SMALL');
+                break;
+            case 'Airbus A320':
+                setAirplaneSelected('MEDIUM');
+                break;
+            case 'Airbus A350':
+                setAirplaneSelected('LARGE');
+                break;
+            default:
+                console.warn('Airplane not selected');
+        }
+
+        // Calculate cost
+        const luggageCost = flightData.luggage === 'Carry-on' ? 0 : parseInt(currentFlightData.trolleyCost),
+            seatsCost = parseInt(flightData.passengers.adults) * parseInt(currentFlightData.adultSeatCost)
+                + parseInt(flightData.passengers.children) * parseInt(currentFlightData.childrenSeatCost);
+        setCost(luggageCost + seatsCost);
+    };
+
+    const renderAirplane = () => { // FIXME: clear code, remove airplaneSelected
+        switch (airplaneSelected) {
+            case 'SMALL':
+                return <EmbraerE145 handleSeatSelection={handleSvgClick} />;
+            case 'MEDIUM':
+                return <Airbus320 handleSeatSelection={handleSvgClick} />;
+            case 'LARGE':
+                return <Airbus350 handleSeatSelection={handleSvgClick} />;
+            default:
+                return null;
+        }
+    };
+
     return (
         <>
             <div className="summary">
@@ -95,7 +177,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <div className="underline" />
                         </div>
                         <p className="summary__data">
-                            {flightData.origin}
+                            {fetchState !== 'Fetched' ? smallLoader : flightData.origin}
                         </p>
                     </div>
                     <div className="summary__option">
@@ -107,7 +189,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <div className="underline" />
                         </div>
                         <p className="summary__data">
-                            {flightData.destination}
+                            {fetchState !== 'Fetched' ? smallLoader : flightData.destination}
                         </p>
                     </div>
                     <div className="summary__option">
@@ -119,7 +201,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <div className="underline" />
                         </div>
                         <p className="summary__data">
-                            {flightData.departure}
+                            {fetchState !== 'Fetched' ? smallLoader : flightData.departure}
                         </p>
                     </div>
                     <div className="summary__option">
@@ -131,7 +213,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <div className="underline" />
                         </div>
                         <p className="summary__data">
-                            {passengers}
+                            {fetchState !== 'Fetched' ? smallLoader : passengers}
                         </p>
                     </div>
                     <div className="summary__option">
@@ -143,7 +225,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <div className="underline" />
                         </div>
                         <p className="summary__data">
-                            {flightData.luggage}
+                            {fetchState !== 'Fetched' ? smallLoader : flightData.luggage}
                         </p>
                     </div>
                     <div className="summary__option">
@@ -155,7 +237,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <div className="underline" />
                         </div>
                         <p className="summary__data">
-                            10502 $
+                            {fetchState !== 'Fetched' ? smallLoader : `${cost}$`}
                         </p>
                     </div>
                     <button
@@ -166,12 +248,30 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                     </button>
                 </div>
                 <div className="summary__airplane">
-                    <p className="summary__selected">Seats selected {chosenSeats.length} / {passengers}</p>
-                    <TransformWrapper>
-                        <TransformComponent>
-                            <Airbus350 handleSeatSelection={handleSvgClick} />
-                        </TransformComponent>
-                    </TransformWrapper>
+                    {fetchState !== 'Fetched'
+                        ? (
+                            <div className="summary__loader">
+                                <Loader
+                                    type="BallTriangle"
+                                    color="#4392F1"
+                                    height={70}
+                                    width={70}
+                                />
+                            </div>
+                        )
+                        : (
+                            <>
+                                <p className="summary__selected">
+                                    Seats selected {chosenSeats.length} / {passengers}
+                                </p>
+                                <TransformWrapper>
+                                    <TransformComponent>
+                                        {renderAirplane()}
+                                    </TransformComponent>
+                                </TransformWrapper>
+                            </>
+                        )
+                    }
                 </div>
                 <div className="summary__options summary__options--aesthetical" />
             </div>
