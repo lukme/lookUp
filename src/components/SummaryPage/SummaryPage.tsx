@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { AiOutlineHome } from 'react-icons/ai';
 import { FaLuggageCart, FaRegCalendarAlt } from 'react-icons/fa';
@@ -45,6 +45,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
         [airplaneSelected, setAirplaneSelected] = useState<AirplaneSize>(),
         [cost, setCost] = useState(0),
         fetchFlightsUrl = 'https://api.jsonbin.io/b/5edfe2712f5fd957fda70142',
+        optionsButtonRef = useRef<any>(),
         smallLoader = (
             <Loader
                 type="BallTriangle"
@@ -56,8 +57,12 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
 
     useEffect(() => {
         !passengers && formatPassengers();
-        (!occupiedState && airplaneSelected) && handleOccupiedSeats();
+        (!occupiedState && airplaneSelected) && handleOccupiedSeats(); // FIXME: airplaneSelected
         fetchState !== 'Fetched' && fetchData();
+        chosenSeats.length === passengers && optionsButtonRef.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
     });
 
     const formatPassengers = () => {
@@ -233,6 +238,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                     <button
                         className="button button--order"
                         onClick={handleOrder}
+                        ref={optionsButtonRef}
                     >
                         Order
                     </button>
