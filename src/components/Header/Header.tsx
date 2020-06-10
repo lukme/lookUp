@@ -27,6 +27,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
         [localLoginState, setLocalLoginState] = useState<boolean>(),
         [loginUserName, setLoginUserName] = useState<string | null>(),
         [fetchState, setFetchState] = useState<FetchState>(),
+        [timeoutFunction, setTimeoutFunction] = useState<any>(),
         fetchUsersUrl = 'https://api.jsonbin.io/b/5edb8db51f9e4e5788186775';
 
     const handleAirplaneClass = (state: string) => {
@@ -46,18 +47,22 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
 
     useEffect(() => {
         handleHeaderClass();
-        localLoginState && setTimeout(() => {
-            logout();
-            toast.error('You have been logged out', toastProps);
-        }, 180000);
         (props.loginConflict && !localLoginState) && setHeaderBoxOpened(true);
     }, [headerBoxOpened, localLoginState, props.loginConflict]);
+
+    const handleLogoutTimout = () => {
+        setTimeoutFunction(setTimeout(() => {
+            logout();
+            toast.error('You have been logged out', toastProps);
+        }, 10000));
+    };
 
     const logout = () => {
         props.setGlobalLoginState(false);
         setLocalLoginState(false);
         setLoginUserName(null);
         setFetchState('NotFetched');
+        clearTimeout(timeoutFunction);
     };
 
     const handleHeaderClass = () => {
@@ -94,6 +99,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                         setLocalLoginState(true);
                         props.setGlobalLoginState(true);
                         isAuthenticated = true;
+                        handleLogoutTimout();
                     }
                     isAuthenticated && props.resetLoginConflict();
                 }
