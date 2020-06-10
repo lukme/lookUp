@@ -164,12 +164,14 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                                 type="text"
                                 placeholder='Username'
                                 onChange={(event) => setLogin(event.target.value)}
+                                disabled={localLoginState}
                             />
                             <input
                                 className='login-box__input'
                                 type="password"
                                 placeholder='Password'
                                 onChange={(event) => setPassword(event.target.value)}
+                                disabled={localLoginState}
                             />
                             <button
                                 className="button login-box__button"
