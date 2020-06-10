@@ -20,6 +20,7 @@ Also, thanks to their authors, I could use the packages from npm listed below to
 * [React CSS Transition Group]
 * [React Icons]
 * [React Toastify]
+* [React Loader Spinner]
 
 ### Installation
 
@@ -33,7 +34,7 @@ $ npm start
 Project will run on [http://localhost:3000/].
 
 ### Status
-Project finished and stable. Please go ahead and explore!
+Project finished and stable.
 
 ### Contact
 Designed and developed by [Lucas Mecfal](mailto:lukme00@gmail.com). Feel free to contact me :) 
@@ -47,5 +48,6 @@ Designed and developed by [Lucas Mecfal](mailto:lukme00@gmail.com). Feel free to
    [React CSS Transition Group]: <https://www.npmjs.com/package/react-addons-css-transition-group/>
    [React Icons]: <https://www.npmjs.com/package/react-icons/>
    [React Toastify]: <https://github.com/fkhadra/react-toastify/>
+   [React Loader Spinner]: <https://www.npmjs.com/package/react-loader-spinner/>
    [http://localhost:3000/]: <http://localhost:3000/>
 
