@@ -54,7 +54,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
         setTimeoutFunction(setTimeout(() => {
             logout();
             toast.error('You have been logged out', toastProps);
-        }, 10000));
+        }, 180000));
     };
 
     const logout = () => {
