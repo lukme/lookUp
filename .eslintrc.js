@@ -54,5 +54,9 @@ module.exports = {
         "no-extra-semi": "warn",
         "default-case": "warn",
         "react/no-unknown-property": "warn",
+        "no-empty-function": "warn",
+        "no-multi-spaces": "warn",
+        "no-useless-return": "error",
+        "no-undef-init": "error",
     }
 };
