@@ -117,7 +117,7 @@
 
         &__options {
             top: $headerHeight;
-            height: calc(100vh - $headerHeight);
+            height: calc(100vh - #{$headerHeight});
             width: 30%;
         }
 
@@ -128,7 +128,7 @@
         &__airplane {
             top: $headerHeight;
             left: 30%;
-            height: calc(100vh - $headerHeight);
+            height: calc(100vh - #{$headerHeight});
         }
     }
 }
@@ -139,7 +139,7 @@
 
         &__options {
             top: $headerHeight;
-            height: calc(100vh - $headerHeight);
+            height: calc(100vh - #{$headerHeight});
             width: 30%;
         }
 
@@ -150,7 +150,7 @@
         &__airplane {
             top: $headerHeight;
             left: 30%;
-            height: calc(100vh - $headerHeight);
+            height: calc(100vh - #{$headerHeight});
         }
 
         &__selected {

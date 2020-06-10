@@ -171,7 +171,7 @@
         position: fixed;
         right: 0;
         width: 100%;
-        height: calc(100vh - $headerHeight);
+        height: calc(100vh - #{$headerHeight});
         border-radius: 0;
         background-color: rgba($darkBlue, .97);
 
