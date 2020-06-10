@@ -4,6 +4,7 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { FaLuggageCart, FaRegCalendarAlt } from 'react-icons/fa';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { GiConvergenceTarget } from 'react-icons/gi';
+import { MdAccessTime } from 'react-icons/md';
 import { RiWalletLine } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 import Loader from 'react-loader-spinner';
@@ -196,6 +197,18 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                         </div>
                         <p className="summary__data">
                             {fetchState !== 'Fetched' ? smallLoader : flightData.departure}
+                        </p>
+                    </div>
+                    <div className="summary__option">
+                        <div className="summary__subtitle--container">
+                            <MdAccessTime size={20} />
+                            <h3 className="summary__subtitle">
+                                Time
+                            </h3>
+                            <div className="underline" />
+                        </div>
+                        <p className="summary__data">
+                            {fetchState !== 'Fetched' ? smallLoader : fetchedFlight?.time}
                         </p>
                     </div>
                     <div className="summary__option">
