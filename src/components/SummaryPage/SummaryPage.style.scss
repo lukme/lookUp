@@ -45,6 +45,11 @@
             background-clip: content-box;
             background-size: cover;
         }
+
+        &--name {
+            font-size: $fontSizeS;
+            color: rgb(163, 162, 167);
+        }
     }
 
     &__selected {
@@ -57,7 +62,7 @@
         font-weight: 400;
         color: $lightBlue;
         pointer-events: none;
-        background-color: $white;
+        background-color: rgba($white, .8);
         padding: 10px;
         border-radius: 10px;
     }

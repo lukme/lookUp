@@ -38,11 +38,10 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
     const { flightData } = props,
         [passengers, setPassengers] = useState<number>(),
         [chosenSeats, setChosenSeats] = useState<string[]>([]),
-        seatsOccupied = ['seat-2', 'seat-9', 'seat-24', 'seat-35', 'seat-36', 'seat-40', 'seat-49', 'seat-60', 'seat-93', 'seat-94', 'seat-95', 'seat-96', 'seat-97', 'seat-98', 'seat-99', 'seat-109', 'seat-120', 'seat-121', 'seat-139', 'seat-153', 'seat-253', 'seat-260', 'seat-269', 'seat-295', 'seat-296', 'seat-299'],
+        seatsOccupied = ['seat-2', 'seat-9', 'seat-24', 'seat-28', 'seat-35', 'seat-36', 'seat-40', 'seat-49', 'seat-60', 'seat-71', 'seat-72', 'seat-86', 'seat-93', 'seat-94', 'seat-95', 'seat-96', 'seat-97', 'seat-98', 'seat-99', 'seat-109', 'seat-120', 'seat-121', 'seat-139', 'seat-151', 'seat-153', 'seat-253', 'seat-260', 'seat-269', 'seat-281', 'seat-286', 'seat-295', 'seat-296', 'seat-299'],
         [occupiedState, setOccupiedState] = useState(false),
         [fetchState, setFetchState] = useState<FetchState>(),
         [fetchedFlight, setFetchedFlight] = useState<Flight>(),
-        [airplaneSelected, setAirplaneSelected] = useState<AirplaneSize>(),
         [cost, setCost] = useState(0),
         fetchFlightsUrl = 'https://api.jsonbin.io/b/5edfe2712f5fd957fda70142',
         optionsButtonRef = useRef<any>(),
@@ -57,7 +56,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
 
     useEffect(() => {
         !passengers && formatPassengers();
-        (!occupiedState && airplaneSelected) && handleOccupiedSeats(); // FIXME: airplaneSelected
+        (!occupiedState && fetchedFlight) && handleOccupiedSeats(); // FIXME: airplaneSelected
         fetchState !== 'Fetched' && fetchData();
         chosenSeats.length === passengers && optionsButtonRef.current.scrollIntoView({
             behavior: 'smooth',
@@ -75,7 +74,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
 
     const handleOccupiedSeats = () => {
         // Exceptional hack for forcing occupied seats
-        const seats = document.querySelectorAll(airplaneSelected === 'SMALL' ? 'rect' : 'path');
+        const seats = document.querySelectorAll(fetchedFlight?.airplane === 'Embraer E145' ? 'rect' : 'path');
         for (let i = 0; i < seats.length; i++) {
             seatsOccupied.filter(id => id === seats[i].id).length !== 0
                 && seats[i].setAttribute('fill', '#E36363');
@@ -259,6 +258,11 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                             <>
                                 <p className="summary__selected">
                                     Seats selected {chosenSeats.length} / {passengers}
+                                    <br />
+                                    <span className="summary__airplane--name">
+                                        {fetchedFlight?.airplane}
+                                    </span>
+
                                 </p>
                                 <TransformWrapper>
                                     <TransformComponent>
