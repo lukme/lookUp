@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { AiFillInfoCircle } from 'react-icons/ai';
 import { IoIosClose } from 'react-icons/io';
 import { toast } from 'react-toastify';
@@ -18,16 +18,16 @@ interface Props {
 
 const Submenu: React.FunctionComponent<Props> = (props: Props) => {
     const { icon, convertedSource, handleClick, storedPassengers } = props,
-        [adults, setAdults] = useState<string>(storedPassengers ? storedPassengers.adults : '0'),
-        [children, setChildren] = useState<string>(storedPassengers ? storedPassengers.children : '0'),
-        [babies, setBabies] = useState<string>(storedPassengers ? storedPassengers.babies : '0'),
+        [adults, setAdults] = useState(storedPassengers ? storedPassengers.adults : '0'),
+        [children, setChildren] = useState(storedPassengers ? storedPassengers.children : '0'),
+        [babies, setBabies] = useState(storedPassengers ? storedPassengers.babies : '0'),
         submenuRef = useRef(null);
 
         useOutsideHandler(props.closeSubmenu, submenuRef);
 
     const convertPassengers = () => {
         const passengers = parseInt(adults) + parseInt(children) + parseInt(babies);
-        if (parseInt(adults) + parseInt(children) + parseInt(babies) !== 0) {
+        if (passengers !== 0) {
             if (parseInt(adults) + parseInt(children) === 0 && parseInt(babies) !== 0) {
                 return toast.error('Babies cannot fly on their own!', toastProps);
             } else if (passengers > 9) {
@@ -45,8 +45,6 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
 
     const renderPassengerOptions = () => {
         const options: JSX.Element[] = [];
-        // const passengers = parseInt(adults) + parseInt(children) + parseInt(babies),
-        // for (let i = 0; i < 10 - passengers; i++) { // TODO: when reached max - values are being affected
         for (let i = 0; i < 10; i++) {
             options.push(<option key={i} value={i}>{i}</option>);
         }
@@ -78,7 +76,10 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
     return (
         convertedSource === 'Passengers'
             ? (
-                <div ref={submenuRef} className="submenu submenu--passengers">
+                <div
+                    ref={submenuRef}
+                    className="submenu submenu--passengers"
+                >
                     <div className="flex-container submenu__header-container">
                         {icon}
                         <p className='submenu__header'>{convertedSource}</p>
@@ -169,7 +170,10 @@ const Submenu: React.FunctionComponent<Props> = (props: Props) => {
                 </div>
             )
             : (
-                <ul ref={submenuRef} className='submenu'>
+                <ul
+                    ref={submenuRef}
+                    className='submenu'
+                >
                     <div className="flex-container submenu__header-container">
                         {icon}
                         <p className='submenu__header'>{convertedSource}</p>

@@ -26,16 +26,16 @@ export const formatMaxDate = () => {
 };
 
 export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
-    const [submenuOpened, setSubmenuOpened] = useState<boolean>(false),
+    const [submenuOpened, setSubmenuOpened] = useState(false),
         [icon, setIcon] = useState<JSX.Element>(),
         [options, setOptions] = useState<string[]>(),
         [dataSelected, setDataSelected] = useState<string | Passengers>(),
         lowerCaseSource = props.source.toLowerCase(),
-        convertedSource = lowerCaseSource.charAt(0).toUpperCase() + lowerCaseSource.slice(1);
+        convertedSource = lowerCaseSource.charAt(0).toUpperCase() + lowerCaseSource.slice(1),
+        convertToday = new Date().toISOString().split("T")[0];
 
     const renderIcon = () => {
-        const { source } = props;
-        switch (source) {
+        switch (props.source) {
             case 'ORIGIN':
                 setOptions(['Lodz']);
                 return setIcon(<AiOutlineHome className='select__icon' size={20} />);
@@ -93,11 +93,6 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
         return !dataSelected ? convertedSource : dataSelected;
     };
 
-    const convertToday = () => {
-        const today = new Date().toISOString().split("T")[0];
-        return today;
-    };
-
     return (
         props.source === 'DEPARTURE'
             ? (
@@ -108,7 +103,7 @@ export const CustomSelect: React.FunctionComponent<Props> = (props: Props) => {
                         id="departure"
                         className='select__button select__date'
                         max={formatMaxDate()}
-                        min={convertToday()}
+                        min={convertToday}
                         onChange={(event) => closeSubmenu(event.target.value)}
                     />
                 </div>

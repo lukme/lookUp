@@ -111,8 +111,8 @@
         margin: 0;
 
         &__options {
-            top: 90px;
-            height: calc(100vh - 90px);
+            top: $headerHeight;
+            height: calc(100vh - $headerHeight);
             width: 30%;
         }
 
@@ -121,9 +121,9 @@
         }
 
         &__airplane {
-            top: 90px;
+            top: $headerHeight;
             left: 30%;
-            height: calc(100vh - 90px);
+            height: calc(100vh - $headerHeight);
         }
     }
 }
@@ -133,8 +133,8 @@
         margin: 0;
 
         &__options {
-            top: 90px;
-            height: calc(100vh - 90px);
+            top: $headerHeight;
+            height: calc(100vh - $headerHeight);
             width: 30%;
         }
 
@@ -143,9 +143,9 @@
         }
 
         &__airplane {
-            top: 90px;
+            top: $headerHeight;
             left: 30%;
-            height: calc(100vh - 90px);
+            height: calc(100vh - $headerHeight);
         }
 
         &__selected {
@@ -177,7 +177,7 @@
         &__options {
             height: 140px;
             width: 100%;
-            top: 90px;
+            top: $headerHeight;
             padding: 20px 20px 0 20px;
             direction: initial;
             display: flex;

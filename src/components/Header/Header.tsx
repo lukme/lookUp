@@ -19,9 +19,9 @@ interface Props {
 export type FetchState = 'NotFetched' | 'IsFetching' | 'Fetched';
 
 const Header: React.FunctionComponent<Props> = (props: Props) => {
-    const [airplaneClassName, setAirplaneClassName] = useState<string>('header__icon'),
-        [headerBoxOpened, setHeaderBoxOpened] = useState<boolean>(false),
-        [headerClassName, setHeaderClassName] = useState<string>('header__loginBtn box--closed'),
+    const [airplaneClassName, setAirplaneClassName] = useState('header__icon'),
+        [headerBoxOpened, setHeaderBoxOpened] = useState(false),
+        [headerClassName, setHeaderClassName] = useState('header__loginBtn box--closed'),
         [login, setLogin] = useState<string>(),
         [password, setPassword] = useState<string>(),
         [localLoginState, setLocalLoginState] = useState<boolean>(),
@@ -47,14 +47,18 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
     useEffect(() => {
         handleHeaderClass();
         localLoginState && setTimeout(() => {
-            props.setGlobalLoginState(false);
-            setLocalLoginState(false);
-            setLoginUserName(null);
-            setFetchState('NotFetched');
+            logout();
             toast.error('You have been logged out', toastProps);
         }, 180000);
         (props.loginConflict && !localLoginState) && setHeaderBoxOpened(true);
     }, [headerBoxOpened, localLoginState, props.loginConflict]);
+
+    const logout = () => {
+        props.setGlobalLoginState(false);
+        setLocalLoginState(false);
+        setLoginUserName(null);
+        setFetchState('NotFetched');
+    };
 
     const handleHeaderClass = () => {
         headerBoxOpened
@@ -65,10 +69,7 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
     const triggerLogin = () => {
         props.resetLoginConflict();
         if (localLoginState) {
-            props.setGlobalLoginState(false);
-            setLocalLoginState(false);
-            setLoginUserName(null);
-            setFetchState('NotFetched');
+            logout();
             return;
         }
         if (login && password) {
@@ -86,7 +87,8 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                 let isAuthenticated = false;
                 for (const user in response) {
                     if (!loginUserName
-                        && response[user].login === login && response[user].password === password) {
+                        && response[user].login === login
+                        && response[user].password === password) {
                         setLoginUserName(response[user].login);
                         setHeaderBoxOpened(false);
                         setLocalLoginState(true);
@@ -176,9 +178,9 @@ const Header: React.FunctionComponent<Props> = (props: Props) => {
                                             width={20}
                                         />
                                     )
-                                    : !localLoginState
-                                        ? 'Login'
-                                        : 'Logout'}
+                                    : localLoginState
+                                        ? 'Logout'
+                                        : 'Login'}
                             </button>
                         </div>
                     </div>

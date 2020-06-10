@@ -39,10 +39,11 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
         [passengers, setPassengers] = useState<number>(),
         [chosenSeats, setChosenSeats] = useState<string[]>([]),
         seatsOccupied = ['seat-2', 'seat-9', 'seat-24', 'seat-35', 'seat-36', 'seat-40', 'seat-49', 'seat-60', 'seat-93', 'seat-94', 'seat-95', 'seat-96', 'seat-97', 'seat-98', 'seat-99', 'seat-109', 'seat-120', 'seat-121', 'seat-139', 'seat-153', 'seat-253', 'seat-260', 'seat-269', 'seat-295', 'seat-296', 'seat-299'],
-        [occupiedState, setOccupiedState] = useState<boolean>(false),
+        [occupiedState, setOccupiedState] = useState(false),
         [fetchState, setFetchState] = useState<FetchState>(),
+        [fetchedFlight, setFetchedFlight] = useState<Flight>(),
         [airplaneSelected, setAirplaneSelected] = useState<AirplaneSize>(),
-        [cost, setCost] = useState<number>(0),
+        [cost, setCost] = useState(0),
         fetchFlightsUrl = 'https://api.jsonbin.io/b/5edfe2712f5fd957fda70142',
         smallLoader = (
             <Loader
@@ -102,10 +103,11 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
     };
 
     const handleOrder = () => {
-        if (!props.loginState) {
-            props.forceOpeningHeaderBox();
+        const { loginState, forceOpeningHeaderBox } = props;
+        if (!loginState) {
+            forceOpeningHeaderBox();
             toast.error('You have to be logged in to submit your order', toastProps);
-        } else if (props.loginState && chosenSeats.length !== passengers) {
+        } else if (loginState && chosenSeats.length !== passengers) {
             toast.error('You have to choose all your seats first', toastProps);
         } else {
             toast.error('That\'s the end of the road! You just booked a flight!', toastProps);
@@ -113,12 +115,15 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
     };
 
     const fetchData = () => {
+        let currentFlightData: Flight;
         setFetchState('IsFetching');
         fetch(fetchFlightsUrl)
             .then(response => response.json())
             .then(response => {
                 setFetchState('Fetched');
                 handleFetchedData(response.flights);
+                currentFlightData = response.flights.filter((flight: Flight) => flight.destination === flightData.destination)[0];
+                setFetchedFlight(currentFlightData);
             })
             .catch(error => {
                 console.warn(error);
@@ -129,21 +134,6 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
     const handleFetchedData = (airplaneData: Flight[]) => {
         const currentFlightData = airplaneData.filter((flight) => flight.destination === flightData.destination)[0];
 
-        // Select airplane graphics
-        switch (currentFlightData.airplane) {
-            case 'Embraer E145':
-                setAirplaneSelected('SMALL');
-                break;
-            case 'Airbus A320':
-                setAirplaneSelected('MEDIUM');
-                break;
-            case 'Airbus A350':
-                setAirplaneSelected('LARGE');
-                break;
-            default:
-                console.warn('Airplane not selected');
-        }
-
         // Calculate cost
         const luggageCost = flightData.luggage === 'Carry-on' ? 0 : parseInt(currentFlightData.trolleyCost),
             seatsCost = parseInt(flightData.passengers.adults) * parseInt(currentFlightData.adultSeatCost)
@@ -151,13 +141,13 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
         setCost(luggageCost + seatsCost);
     };
 
-    const renderAirplane = () => { // FIXME: clear code, remove airplaneSelected
-        switch (airplaneSelected) {
-            case 'SMALL':
+    const renderAirplane = () => {
+        switch (fetchedFlight?.airplane) {
+            case 'Embraer E145':
                 return <EmbraerE145 handleSeatSelection={handleSvgClick} />;
-            case 'MEDIUM':
+            case 'Airbus A320':
                 return <Airbus320 handleSeatSelection={handleSvgClick} />;
-            case 'LARGE':
+            case 'Airbus A350':
                 return <Airbus350 handleSeatSelection={handleSvgClick} />;
             default:
                 return null;
@@ -248,7 +238,7 @@ const SummaryPage: React.FunctionComponent<Props> = (props: Props) => {
                     </button>
                 </div>
                 <div className="summary__airplane">
-                    {fetchState !== 'Fetched'
+                    {fetchState !== 'Fetched' && !fetchedFlight
                         ? (
                             <div className="summary__loader">
                                 <Loader

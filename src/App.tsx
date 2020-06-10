@@ -10,17 +10,17 @@ function App() {
         [loginState, setLoginState] = useState(false),
         [loginConflict, setLoginConflict] = useState(false);
 
-    // !flightData && setFlightData({
-    //     departure: "2020-06-04",
-    //     destination: "Vienna",
-    //     luggage: "Carry-on & trolley",
-    //     origin: "Lodz",
-    //     passengers: {
-    //         adults: "2",
-    //         babies: "0",
-    //         children: "0",
-    //     }
-    // });
+    !flightData && setFlightData({
+        departure: "2020-06-04",
+        destination: "Cracov",
+        luggage: "Carry-on & trolley",
+        origin: "Lodz",
+        passengers: {
+            adults: "2",
+            babies: "0",
+            children: "1",
+        }
+    });
 
     return (
         <div className="App">
