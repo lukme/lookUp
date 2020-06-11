@@ -2,6 +2,10 @@
 
 LookUp is a flight booking application made for educational and practice purposes. Keep in mind that there is no connection to any of real flight databases or so on.
 
+##### Login data
+Username: admin
+Password: admin123
+
 ### Tech
 
 LookUp uses technologies listed below to work correctly:
