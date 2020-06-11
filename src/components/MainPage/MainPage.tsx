@@ -83,7 +83,7 @@ export const MainPage: React.FunctionComponent<Props> = (props: Props) => {
                 <div className="main__image"></div>
                 <div className="main__textbox">
                     <p>
-                        Conveniently synthesize cost effective.
+                        Conveniently plan your flights
                     </p>
                 </div>
             </div>
