@@ -12,7 +12,6 @@ LookUp uses technologies listed below to work correctly:
 
 * [ReactJS]
 * [Typescript]
-* [ES6]
 * [SCSS]
 * RWD
 
